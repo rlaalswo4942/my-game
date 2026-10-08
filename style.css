@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  background: #1e1e24;
+  color: #f0f0f0;
+  font-family: "Malgun Gothic", sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #ffd43b;
+  margin-bottom: 8px;
+}
+
+.intro {
+  font-size: 1.2rem;
+  color: #c8c8d0;
+}
+
+h2 {
+  margin-top: 40px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 6px;
+}
+
+.games li {
+  transition: transform 0.15s;
+  transform-origin: left center;
+}
+
+.games li:hover {
+  transform: scale(1.1);
+}
+
+.ideas article {
+  background: #2a2a32;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+}
+
+.ideas h3 {
+  margin: 4px 0 8px;
+}
+
+.ideas p {
+  margin: 4px 0;
+}
+
+footer {
+  margin-top: 48px;
+  color: #888;
+  text-align: center;
+}
+
+a {
+  color: #74c0fc;
+}
+
+button {
+  margin-top: 8px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+html.inverted {
+  filter: invert(1);
+}
