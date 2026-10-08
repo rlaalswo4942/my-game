@@ -74,3 +74,9 @@ button {
 html.inverted {
   filter: invert(1);
 }
+
+.deployed {
+  font-size: 0.75rem;
+  text-align: center;
+  opacity: 0.6;
+}
