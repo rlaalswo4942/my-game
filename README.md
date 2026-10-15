@@ -5,7 +5,6 @@
 - 학번 / 이름: 202250027 / 김민재
 - 자기소개 + 주차별 기록: https://rlaalswo4942.github.io/my-game/
 - 3주차 첫 화면: https://rlaalswo4942.github.io/my-game/game.html
-- Apple × 10 (완성형 사과게임): https://rlaalswo4942.github.io/my-game/apple/ — [설명](apple/README.md)
 - 기획서: [기획서.md](기획서.md)
 
 ## 게임 아이디어
