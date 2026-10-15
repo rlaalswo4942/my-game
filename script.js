@@ -1,3 +1,14 @@
+// 페이지 맨 아래에 오늘 날짜 표시
+const today = new Date();
+document.getElementById("today").textContent =
+  today.getFullYear() + "년 " + (today.getMonth() + 1) + "월 " + today.getDate() + "일";
+
+// 버튼을 누르면 페이지 전체 색 반전 (다시 누르면 원래대로)
+document.getElementById("invert").addEventListener("click", function () {
+  document.documentElement.classList.toggle("inverted");
+});
+
+// ===== 3주차: 사과게임 첫 화면 =====
 const canvas = document.getElementById("game");  // 이름이 "game"인 도화지를 찾는다
 const ctx = canvas.getContext("2d");             // 그 도화지에 그릴 "붓"을 가져온다
 
