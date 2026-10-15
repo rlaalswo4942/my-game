@@ -43,6 +43,7 @@ export function createRankedEngine(rules = RULES) {
   let pending = false;     // 이동은 한 번에 하나씩만 (순서 역전·중복 방지)
   let syncing = false;
   let nextSyncAt = Infinity;
+  let dirty = false;       // 서버 응답으로 판이 바뀌었는지 (화면 루프가 다시 그리도록)
 
   const e = { mode: "ranked", status: "READY", score: 0, board: null, boardIndex: 0, error: null };
 
@@ -53,6 +54,7 @@ export function createRankedEngine(rules = RULES) {
     e.score = st.score;
     e.boardIndex = st.board_index;
     e.status = st.status === "playing" ? "PLAYING" : "FINISHED";
+    dirty = true;
     const elapsed = Date.parse(st.server_now) - Date.parse(st.started_at);
     const due = rules.bonusEventSeconds.map((s) => s * 1000).find((t) => t > elapsed);
     nextSyncAt = Date.parse(st.started_at) + (due ?? rules.durationMs) + 300;  // 다음 보너스 시점에 다시 동기화
@@ -106,7 +108,9 @@ export function createRankedEngine(rules = RULES) {
   // 화면 루프에서 호출. 보너스 시점·만료 시점에만 서버와 동기화한다.
   e.tick = () => {
     if (e.status === "PLAYING" && serverNow() >= nextSyncAt) { nextSyncAt = Infinity; e.sync(); }
-    return false;
+    const changed = dirty;
+    dirty = false;
+    return changed;
   };
 
   e.finish = async () => {
