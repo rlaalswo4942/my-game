@@ -140,10 +140,16 @@ code {
   font-size: 0.9em;
 }
 
-/* 3주차 게임 도화지: 화면이 좁으면 비율 유지하며 줄어듦 */
-canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: 1px solid #fff;
+/* 주차 폴더 맨 아래 게임 링크 */
+.game-link {
+  display: inline-block;
+  margin: 12px 0 4px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #2a2a32;
+  text-decoration: none;
+}
+
+.game-link:hover {
+  background: #34343e;
 }
