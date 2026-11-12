@@ -106,7 +106,7 @@ canvas.addEventListener("mousemove", function (e) {
   if (!isDragging) return;
   const cell = cellAt(e);
   endCol = cell.col;
-  endRow = cel.row;
+  endRow = cell.row;
 });
 // 캔버스 밖에서 손을 떼도 드래그가 끝나도록 document에 건다
 document.addEventListener("mouseup", function () {
@@ -131,7 +131,7 @@ function cellAt(e) {
   let row = Math.floor((mouseY - GRID_Y) / CELL);
   // 판 밖으로 끌어도 가장자리 칸에서 멈춘다
   if (col < 0) col = 0;
-  if (col > COLS - 1) col = COLS;
+  if (col > COLS - 1) col = COLS - 1;
   if (row < 0) row = 0;
   if (row > ROWS - 1) row = ROWS - 1;
   return { col: col, row: row };
@@ -242,7 +242,7 @@ function gameLoop() {
     const boxY = GRID_Y + selTop * CELL;
     const boxW = (selRight - selLeft + 1) * CELL;
     const boxH = (selBottom - selTop + 1) * CELL;
-    if (sum >= 10) {
+    if (sum === 10) {
       ctx.fillStyle = "rgba(64, 192, 87, " + SELECT_ALPHA + ")";
       ctx.strokeStyle = "#2f9e44";
     } else {

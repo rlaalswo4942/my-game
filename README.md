@@ -6,7 +6,7 @@
 - 저장소: https://github.com/rlaalswo4942/my-game
 - 플레이(배포): https://rlaalswo4942.github.io/my-game/
 - 기획서: [기획서.md](기획서.md)
-- 회고: [회고.md](회고.md) (1~5주차, 최신 주차가 맨 위)
+- 회고: [회고.md](회고.md) (1~5주차, 7주차 — 6주차는 아직, 최신 주차가 맨 위)
 - 자기소개 + 주차별 기록: https://rlaalswo4942.github.io/self-intro/
 
 ## 게임 아이디어
