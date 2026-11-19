@@ -70,10 +70,6 @@ let numbers = [];
 // ③ 이벤트 — 상태만 적어 둔다 (계산·그리기는 게임 루프가 한다)
 // ==========================================================
 canvas.addEventListener("mousedown", function (e) {
-  if (gameState === "start") {   // 시작 화면에서는 클릭해도 시작
-    resetGame();
-    return;
-  }
   if (gameState !== "playing" || dropY !== 0) return;  // 플레이 중이 아니거나 사과판이 내려오는 중이면 무시
   const cell = cellAt(e);
   startCol = cell.col;
@@ -139,6 +135,8 @@ function resetGame() {
   for (let i = 0; i < COLS * ROWS; i++) {
     numbers.push(Math.floor(Math.random() * 9) + 1);  // 1~9 중 하나
   }
+  numbers[0] = 3;  // 첫 줄 앞의 두 사과를 3과 7로 고정 (드래그로 합 10 확인용)
+  numbers[1] = 7;
   score = 0;
   timeLeft = TIME_MAX;
   dropY = -600;
@@ -167,14 +165,13 @@ function centerText(text, y, font, color) {
   ctx.fillText(text, canvas.width / 2, y);
 }
 
-// 시작 화면: 제목, 목표, 조작법, 최고 점수, 깜빡이는 시작 안내
+// 시작 화면: 제목, 목표, 조작법, 깜빡이는 시작 안내
 function drawStartScreen() {
   centerText("사과게임", 190, "bold 64px sans-serif", "#c92a2a");
   centerText("합이 10이 되게 사과를 묶어서 지우세요", 280, "22px sans-serif", "#2b2b2b");
   centerText("마우스로 끌어서 직사각형 선택 · 제한 시간 " + TIME_MAX + "초", 320, "18px sans-serif", "#2b2b2b");
-  centerText("최고 점수: " + bestScore, 380, "bold 20px sans-serif", "#1971c2");
   if (Math.floor(Date.now() / 500) % 2 === 0) {   // 0.5초마다 보였다 안 보였다
-    centerText("아무 키나 눌러 시작 (클릭해도 시작)", 470, "18px sans-serif", "#2b2b2b");
+    centerText("아무 키나 눌러 시작", 470, "18px sans-serif", "#2b2b2b");
   }
 }
 
@@ -199,16 +196,16 @@ function drawDebug() {
     "[DEBUG] D키",
     "state: " + state,
     "score: " + score,
-    "best: " + bestScore,
     "time: " + timeLeft.toFixed(1),
     "dropY: " + dropY,
     "drag: " + isDragging,
     "start: " + startCol + "," + startRow,
     "end: " + endCol + "," + endRow,
     "sum: " + sum + " / " + count + "개",
+    "apples: " + numbers.length,
   ];
   ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
-  ctx.fillRect(4, 64, 132, lines.length * 16 + 8);
+  ctx.fillRect(4, 64, 128, lines.length * 16 + 8);
   ctx.fillStyle = "#b2f2bb";
   ctx.font = "12px monospace";
   ctx.textAlign = "left";
