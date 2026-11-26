@@ -274,6 +274,13 @@ function gameLoop() {
   }
 
   // ----- 3) 그리기 -----
+  draw();
+
+  requestAnimationFrame(gameLoop);  // 다음 프레임에 다시 부른다
+}
+
+// 플레이 화면 그리기: 사과판, 드래그 상자, 시간 막대, 글자, 시간 종료 화면, 디버그
+function draw() {
   // 사과판: 10×10, 각 사과에 1~9 숫자 (0은 지워진 칸이라 안 그린다)
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
@@ -351,8 +358,6 @@ function gameLoop() {
   if (showDebug) {
     drawDebug();
   }
-
-  requestAnimationFrame(gameLoop);  // 다음 프레임에 다시 부른다
 }
 
 // ==========================================================
