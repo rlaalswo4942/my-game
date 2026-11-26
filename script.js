@@ -20,7 +20,7 @@ const BAR_H = 520;        // 막대 세로
 // --- 속도 (튜닝할 숫자) ---
 const TIME_MAX = 120;         // 제한 시간 (초)
 const TIME_SPEED = 1 / 60;    // 한 프레임에 줄어드는 시간 (1초에 60프레임 기준)
-const DROP_SPEED = 8;         // 사과판이 한 프레임에 떨어지는 거리 (픽셀)
+const DROP_SPEED = 16;        // 사과판이 한 프레임에 떨어지는 거리 (픽셀) — 9주차: 8→16, 내려오는 동안 멈칫해서 시간 절반으로
 
 // --- 조작 느낌 (튜닝할 숫자) ---
 const SELECT_ALPHA = 0.35;    // 드래그 상자 투명도 (0 = 안 보임 ~ 1 = 사과가 가려짐)
@@ -178,7 +178,7 @@ function drawStartScreen() {
   centerText("합이 10이 되게 사과를 묶어서 지우세요", 280, "22px sans-serif", "#2b2b2b");
   centerText("마우스로 끌어서 직사각형 선택 · 제한 시간 " + TIME_MAX + "초", 320, "18px sans-serif", "#2b2b2b");
   if (Math.floor(Date.now() / 500) % 2 === 0) {   // 0.5초마다 보였다 안 보였다
-    centerText("아무 키나 눌러 시작", 470, "18px sans-serif", "#2b2b2b");
+    centerText("아무 키나 눌러 시작", 470, "bold 26px sans-serif", "#2b2b2b");  // 9주차: 18px→굵은 26px
   }
   centerText("휴대폰은 화면을 탭해서 시작, 손가락으로 끌어서 선택", 540, "16px sans-serif", "#2b2b2b");
 }
