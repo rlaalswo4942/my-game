@@ -69,7 +69,13 @@ let numbers = [];
 // ==========================================================
 // ③ 이벤트 — 상태만 적어 둔다 (계산·그리기는 게임 루프가 한다)
 // ==========================================================
-canvas.addEventListener("mousedown", function (e) {
+// pointer 이벤트는 마우스와 터치를 같이 받는다
+canvas.addEventListener("pointerdown", function (e) {
+  // 휴대폰(터치): 키보드가 없으니 시작 화면·시간 종료 화면에서는 탭으로 시작
+  if (e.pointerType === "touch" && gameState !== "playing") {
+    resetGame();
+    return;
+  }
   if (gameState !== "playing" || dropY !== 0) return;  // 플레이 중이 아니거나 사과판이 내려오는 중이면 무시
   const cell = cellAt(e);
   startCol = cell.col;
@@ -78,7 +84,7 @@ canvas.addEventListener("mousedown", function (e) {
   endRow = cell.row;
   isDragging = true;
 });
-canvas.addEventListener("mousemove", function (e) {
+canvas.addEventListener("pointermove", function (e) {
   if (!isDragging) return;
   const cell = cellAt(e);
   endCol = cell.col;
@@ -86,7 +92,7 @@ canvas.addEventListener("mousemove", function (e) {
 });
 // 캔버스 밖에서 손을 떼도 드래그가 끝나도록 document에 건다
 // 손을 뗐을 때 합이 딱 10이면 상자 안 사과를 지우고, 지운 개수만큼 점수
-document.addEventListener("mouseup", function () {
+document.addEventListener("pointerup", function () {
   if (isDragging && sum === 10) {
     for (let row = selTop; row <= selBottom; row++) {
       for (let col = selLeft; col <= selRight; col++) {
@@ -117,8 +123,9 @@ document.addEventListener("keydown", function (e) {
 // 마우스 위치 → 사과판의 몇 열 몇 행인지
 function cellAt(e) {
   const rect = canvas.getBoundingClientRect();   // 캔버스가 화면에서 어디 있는지
-  const mouseX = e.clientX - rect.left;          // 캔버스 기준 x
-  const mouseY = e.clientY - rect.top;           // 캔버스 기준 y
+  // 휴대폰에서는 캔버스가 줄어서 보이므로, 실제 크기(800×600) ÷ 보이는 크기 비율을 곱해 보정한다
+  const mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);   // 캔버스 기준 x
+  const mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);  // 캔버스 기준 y
   let col = Math.floor((mouseX - GRID_X) / CELL);
   let row = Math.floor((mouseY - GRID_Y) / CELL);
   // 판 밖으로 끌어도 가장자리 칸에서 멈춘다
@@ -173,6 +180,7 @@ function drawStartScreen() {
   if (Math.floor(Date.now() / 500) % 2 === 0) {   // 0.5초마다 보였다 안 보였다
     centerText("아무 키나 눌러 시작", 470, "18px sans-serif", "#2b2b2b");
   }
+  centerText("휴대폰은 화면을 탭해서 시작, 손가락으로 끌어서 선택", 540, "16px sans-serif", "#2b2b2b");
 }
 
 // 시간 종료 화면: 최종 점수, 최고 점수, 신기록, 재시작 안내
@@ -185,7 +193,7 @@ function drawGameOver() {
   if (isNewRecord) {
     centerText("신기록!", 360, "bold 22px sans-serif", "#ffd43b");
   }
-  centerText("R 키로 다시 시작", 395, "16px sans-serif", "#dee2e6");
+  centerText("R 키로 다시 시작 (휴대폰은 탭)", 395, "16px sans-serif", "#dee2e6");
 }
 
 // 디버그 표시: 지금 게임 안의 값을 왼쪽 빈 곳에 작은 글씨로 보여 준다
